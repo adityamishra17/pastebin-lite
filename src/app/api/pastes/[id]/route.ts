@@ -32,7 +32,7 @@ export async function GET(
     testNowHeader ? Number(testNowHeader) : undefined
   );
 
-  // ---- Availability check ----
+  // ---- Availability check (BEFORE incrementing) ----
   const expired =
     paste.expiresAt !== null &&
     currentTime >= paste.expiresAt;
@@ -48,7 +48,7 @@ export async function GET(
     );
   }
 
-  // ---- Increment views (successful fetch counts) ----
+  // ---- Increment views (after availability check) ----
   const updatedPaste = await incrementViews(id);
 
   if (!updatedPaste) {
